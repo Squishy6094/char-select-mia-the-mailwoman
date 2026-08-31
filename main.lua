@@ -28,6 +28,8 @@ local MIA_ANIMTABLE = {
 
     [CHAR_ANIM_SINGLE_JUMP] = "Mia_SingleJump",
 
+    [CHAR_ANIM_RUNNING] = "Mia_Run",
+
     [CHAR_ANIM_STAR_DANCE] = "Mia_StarDance",
     [CHAR_ANIM_RETURN_FROM_STAR_DANCE] = "Mia_ReturnStarDance",
 }
@@ -345,22 +347,20 @@ local function special_expressions(m)
     if m.action == ACT_IDLE and m.actionTimer >= 7 then
         return { eyes = MARIO_EYES_HALF_CLOSED }
 
-    elseif (m.input & INPUT_NONZERO_ANALOG ~= 0) then
-
-        if m.action == ACT_WALKING or m.action == ACT_BUTT_SLIDE or
+    elseif m.action == ACT_WALKING or m.action == ACT_BUTT_SLIDE or
             m.action == ACT_DIVE_SLIDE or
             m.action == ACT_STOMACH_SLIDE or
             m.action == ACT_HOLD_BUTT_SLIDE or
             m.action == ACT_SLIDE_KICK_SLIDE or
             m.action == ACT_HOLD_STOMACH_SLIDE then
+        if (m.input & INPUT_NONZERO_ANALOG ~= 0) then
+            if (m.faceAngle.y < m.intendedYaw) then
+                return { eyes = MARIO_EYES_LOOK_RIGHT }
+            end
 
-                if (m.faceAngle.y < m.intendedYaw) then
-                    return { eyes = MARIO_EYES_LOOK_RIGHT }
-                end
-
-                if (m.faceAngle.y > m.intendedYaw) then
-                    return { eyes = MARIO_EYES_LOOK_LEFT }
-                end
+            if (m.faceAngle.y > m.intendedYaw) then
+                return { eyes = MARIO_EYES_LOOK_LEFT }
+            end
         end
 
     elseif curranim == CHAR_ANIM_TURNING_PART2 and animframe < 9 then
@@ -392,7 +392,7 @@ local function special_expressions(m)
 
     elseif m.healCounter > 0 and (m.action & ACT_GROUP_CUTSCENE) == 0 then
         return { eyes = 9 }
-
+        
     elseif (smluaanim == "Mia_StarDance") then
         if animframe < 27 then
             return { mouth = MIA_MOUTH_HAPPY, eyes = MARIO_EYES_BLINK , hands = MARIO_HAND_FISTS}
@@ -435,6 +435,7 @@ function mia_mouth_func(node, matStackIndex)
     local asSwitchNode = cast_graph_node(node)
     local mouth_id = MIA_MOUTH_NORMAL
     local special_expressions = special_expressions(m)
+    local smluaanim = smlua_anim_util_get_current_animation_name(m.marioObj)
 
     if MIA_ANIMTABLE_MOUTH[m.marioObj.header.gfx.animInfo.animID] ~= nil then
         mouth_id = MIA_ANIMTABLE_MOUTH[m.marioObj.header.gfx.animInfo.animID]
@@ -457,16 +458,20 @@ function mia_mouth_func(node, matStackIndex)
         end
     end
 
+    if smluaanim == "Mia_RunFast" then
+        mouth_id = MIA_MOUTH_HAPPY
+    end
+    
     asSwitchNode.selectedCase = mouth_id
 end
 function mia_extra_switch_func(node, matStackIndex)
     local m = geo_get_mario_state()
     local special_expressions = special_expressions(m)
-
+    local bodystate = geo_get_body_state()
     local asSwitchNode = cast_graph_node(node)
 
     if cast_graph_node(node).parameter == 0 then
-        if m.waterLevel > m.pos.y + 50 then
+        if m.waterLevel > m.pos.y + 70 then
             asSwitchNode.selectedCase = 1
         else
             asSwitchNode.selectedCase = 0
@@ -484,12 +489,35 @@ function mia_extra_switch_func(node, matStackIndex)
                 asSwitchNode.selectedCase = MIA_HAND_DEFAULT
             end
         end
+    elseif cast_graph_node(node).parameter == 2 then
+        local wingrot = ((get_area_update_counter() % 16))
+        local wingrot_flutter = ((get_area_update_counter() % 6))
+        --djui_chat_message_create(tostring(wingrot_flutter))
+        if bodystate.wingFlutter == 1 then
+            if wingrot_flutter > (5 / 2) then
+                asSwitchNode.selectedCase = 0
+            else
+                asSwitchNode.selectedCase = 1
+            end
+        else
+            if wingrot > (15 / 2) then
+                asSwitchNode.selectedCase = 0
+            else
+                asSwitchNode.selectedCase = 1
+            end
+        end
     end
-
 end
+
 hook_event(HOOK_MARIO_UPDATE, function(m)
     if charSelect.character_get_current_number(m.playerIndex) == CT_MIA_MAILER then
         local special_expressions = special_expressions(m)
+
+        if m.action == ACT_WALKING and m.forwardVel > 33 then
+            smlua_anim_util_set_animation(m.marioObj, "Mia_RunFast")
+            m.marioBodyState.torsoAngle.x = -degrees_to_sm64(5)
+            m.marioBodyState.handState = MARIO_HAND_OPEN
+        end
 
         if special_expressions then
             if special_expressions.eyes then

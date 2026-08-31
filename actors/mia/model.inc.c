@@ -82,14 +82,6 @@ Lights1 mia_Eye_Help_lights = gdSPDefLights1(
 	0x6F, 0x5E, 0x49,
 	0xDF, 0xBF, 0x97, 0x28, 0x28, 0x28);
 
-Lights1 mia_Mask1_lights = gdSPDefLights1(
-	0x7F, 0x76, 0x1,
-	0xFF, 0xED, 0x2, 0x28, 0x28, 0x28);
-
-Lights1 mia_Mask2_lights = gdSPDefLights1(
-	0x0, 0x6D, 0x7F,
-	0x0, 0xDC, 0xFF, 0x28, 0x28, 0x28);
-
 Lights1 mia_Cap_Inside_lights = gdSPDefLights1(
 	0x6D, 0x15, 0xA,
 	0xDC, 0x34, 0x1F, 0x28, 0x28, 0x28);
@@ -186,12 +178,20 @@ Texture mia_mia_Wing1_rgba16[] = {
 	#include "actors/mia/mia_Wing1.rgba16.inc.c"
 };
 
+Texture mia_mask_rgba16[] = {
+	#include "actors/mia/mask.rgba16.inc.c"
+};
+
 Texture mia_Eyes2_rgba16[] = {
 	#include "actors/mia/Eyes2.rgba16.inc.c"
 };
 
 Texture mia_Eyes3_rgba16[] = {
 	#include "actors/mia/Eyes3.rgba16.inc.c"
+};
+
+Texture mia_mia_Wing2_rgba16[] = {
+	#include "actors/mia/mia_Wing2.rgba16.inc.c"
 };
 
 Texture mia_metal_mariokart_rgba16[] = {
@@ -4162,59 +4162,19 @@ Gfx mia_Left_Wing_DL_mesh_layer_4_tri_0[] = {
 	gsSPEndDisplayList(),
 };
 
-Vtx mia_MaskSwitchOption_MaskDL_mesh_layer_1_vtx_0[18] = {
-	{{{41, 52, -73}, 0, {-16, 1008}, {0x0E, 0x71, 0xC8, 0xFF}}},
-	{{{80, 44, -89}, 0, {-16, 1008}, {0xE5, 0x74, 0xD3, 0xFF}}},
-	{{{81, 41, -96}, 0, {-16, 1008}, {0xED, 0x76, 0xD4, 0xFF}}},
-	{{{112, 71, -61}, 0, {-16, 1008}, {0xE1, 0x75, 0xDA, 0xFF}}},
-	{{{106, 72, -54}, 0, {-16, 1008}, {0xF9, 0x7D, 0xED, 0xFF}}},
-	{{{112, 71, 64}, 0, {-16, 1008}, {0xE1, 0x75, 0x26, 0xFF}}},
-	{{{106, 72, 57}, 0, {-16, 1008}, {0xF9, 0x7D, 0x13, 0xFF}}},
-	{{{80, 44, 91}, 0, {-16, 1008}, {0xE5, 0x74, 0x2D, 0xFF}}},
-	{{{81, 41, 99}, 0, {-16, 1008}, {0xED, 0x76, 0x2C, 0xFF}}},
-	{{{41, 52, 75}, 0, {-16, 1008}, {0x0E, 0x71, 0x38, 0xFF}}},
-	{{{33, 51, 80}, 0, {-16, 1008}, {0x0E, 0x70, 0x3B, 0xFF}}},
-	{{{31, 81, 34}, 0, {-16, 1008}, {0x04, 0x72, 0x37, 0xFF}}},
-	{{{22, 83, 31}, 0, {-16, 1008}, {0x03, 0x74, 0x34, 0xFF}}},
-	{{{47, 89, 1}, 0, {-16, 1008}, {0x1E, 0x7B, 0x00, 0xFF}}},
-	{{{57, 86, 1}, 0, {-16, 1008}, {0x21, 0x7B, 0x00, 0xFF}}},
-	{{{31, 81, -32}, 0, {-16, 1008}, {0x04, 0x72, 0xC9, 0xFF}}},
-	{{{22, 83, -29}, 0, {-16, 1008}, {0x03, 0x74, 0xCC, 0xFF}}},
-	{{{33, 51, -77}, 0, {-16, 1008}, {0x0E, 0x70, 0xC5, 0xFF}}},
+Vtx mia_MaskSwitchOption_MaskDL_mesh_layer_5_vtx_0[6] = {
+	{{{128, 76, 1}, 0, {1008, 496}, {0xF5, 0x81, 0x00, 0xFF}}},
+	{{{128, 53, 98}, 0, {1008, 951}, {0xFD, 0x85, 0xE2, 0xFF}}},
+	{{{12, 55, 98}, 0, {-16, 951}, {0xF5, 0x88, 0xD9, 0xFF}}},
+	{{{16, 94, 1}, 0, {-16, 496}, {0xED, 0x82, 0x00, 0xFF}}},
+	{{{12, 55, -96}, 0, {-16, 41}, {0xF5, 0x88, 0x27, 0xFF}}},
+	{{{128, 53, -96}, 0, {1008, 41}, {0xFD, 0x85, 0x1E, 0xFF}}},
 };
 
-Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_1_tri_0[] = {
-	gsSPVertex(mia_MaskSwitchOption_MaskDL_mesh_layer_1_vtx_0 + 0, 18, 0),
-	gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
-	gsSP2Triangles(1, 4, 3, 0, 4, 5, 3, 0),
-	gsSP2Triangles(4, 6, 5, 0, 7, 5, 6, 0),
-	gsSP2Triangles(7, 8, 5, 0, 9, 8, 7, 0),
-	gsSP2Triangles(9, 10, 8, 0, 11, 10, 9, 0),
-	gsSP2Triangles(11, 12, 10, 0, 13, 12, 11, 0),
-	gsSP2Triangles(13, 11, 14, 0, 13, 14, 15, 0),
-	gsSP2Triangles(13, 15, 16, 0, 15, 17, 16, 0),
-	gsSP2Triangles(15, 0, 17, 0, 0, 2, 17, 0),
-	gsSPEndDisplayList(),
-};
-
-Vtx mia_MaskSwitchOption_MaskDL_mesh_layer_6_vtx_0[9] = {
-	{{{106, 72, -54}, 0, {-16, 1008}, {0x07, 0x76, 0xD2, 0xFF}}},
-	{{{80, 44, -89}, 0, {-16, 1008}, {0xF6, 0x66, 0xB4, 0xFF}}},
-	{{{41, 52, -73}, 0, {-16, 1008}, {0xF6, 0x66, 0xB5, 0xFF}}},
-	{{{31, 81, -32}, 0, {-16, 1008}, {0xFF, 0x75, 0xCE, 0xFF}}},
-	{{{57, 86, 1}, 0, {-16, 1008}, {0x12, 0x7E, 0x00, 0xFF}}},
-	{{{106, 72, 57}, 0, {-16, 1008}, {0x07, 0x76, 0x2E, 0xFF}}},
-	{{{31, 81, 34}, 0, {-16, 1008}, {0xFF, 0x75, 0x32, 0xFF}}},
-	{{{41, 52, 75}, 0, {-16, 1008}, {0xF6, 0x66, 0x4B, 0xFF}}},
-	{{{80, 44, 91}, 0, {-16, 1008}, {0xF6, 0x66, 0x4C, 0xFF}}},
-};
-
-Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_6_tri_0[] = {
-	gsSPVertex(mia_MaskSwitchOption_MaskDL_mesh_layer_6_vtx_0 + 0, 9, 0),
-	gsSP2Triangles(0, 1, 2, 0, 2, 3, 0, 0),
-	gsSP2Triangles(4, 0, 3, 0, 5, 0, 4, 0),
-	gsSP2Triangles(4, 6, 5, 0, 6, 7, 5, 0),
-	gsSP1Triangle(7, 8, 5, 0),
+Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_5_tri_0[] = {
+	gsSPVertex(mia_MaskSwitchOption_MaskDL_mesh_layer_5_vtx_0 + 0, 6, 0),
+	gsSP2Triangles(0, 1, 2, 0, 3, 0, 2, 0),
+	gsSP2Triangles(0, 3, 4, 0, 0, 4, 5, 0),
 	gsSPEndDisplayList(),
 };
 
@@ -5420,29 +5380,17 @@ Gfx mat_revert_mia_Wings[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_mia_Mask1[] = {
-	gsSPSetLights1(mia_Mask1_lights),
-	gsDPPipeSync(),
-	gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT, 0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT),
-	gsDPSetAlphaDither(G_AD_NOISE),
-	gsSPTexture(65535, 65535, 0, 0, 1),
-	gsSPEndDisplayList(),
-};
-
-Gfx mat_revert_mia_Mask1[] = {
-	gsDPPipeSync(),
-	gsDPSetAlphaDither(G_AD_DISABLE),
-	gsSPEndDisplayList(),
-};
-
 Gfx mat_mia_Mask2[] = {
 	gsSPClearGeometryMode(G_CULL_BACK),
-	gsSPSetLights1(mia_Mask2_lights),
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(SHADE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, SHADE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0),
+	gsDPSetCombineLERP(0, 0, 0, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsDPSetAlphaDither(G_AD_NOISE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
-	gsDPSetPrimColor(0, 0, 255, 255, 255, 129),
+	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, mia_mask_rgba16),
+	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
+	gsDPLoadBlock(7, 0, 0, 1023, 256),
+	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
+	gsDPSetTileSize(0, 0, 0, 124, 124),
 	gsSPEndDisplayList(),
 };
 
@@ -5534,6 +5482,27 @@ Gfx mat_mia_Eye_Closed[] = {
 };
 
 Gfx mat_revert_mia_Eye_Closed[] = {
+	gsDPPipeSync(),
+	gsDPSetAlphaDither(G_AD_DISABLE),
+	gsSPEndDisplayList(),
+};
+
+Gfx mat_mia_Wings2[] = {
+	gsSPClearGeometryMode(G_CULL_BACK),
+	gsDPPipeSync(),
+	gsDPSetCombineLERP(0, 0, 0, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, ENVIRONMENT, 0),
+	gsDPSetAlphaDither(G_AD_NOISE),
+	gsSPTexture(65535, 65535, 0, 0, 1),
+	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, mia_mia_Wing2_rgba16),
+	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
+	gsDPLoadBlock(7, 0, 0, 1023, 256),
+	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 5, 0, G_TX_CLAMP | G_TX_NOMIRROR, 5, 0),
+	gsDPSetTileSize(0, 0, 0, 124, 124),
+	gsSPEndDisplayList(),
+};
+
+Gfx mat_revert_mia_Wings2[] = {
+	gsSPSetGeometryMode(G_CULL_BACK),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
@@ -6405,6 +6374,13 @@ Gfx mia_Left_Wing_DL_mesh_layer_4[] = {
 	gsSPEndDisplayList(),
 };
 
+Gfx mia_Left_Wing_DL_mesh_layer_4_opt_1[] = {
+	gsSPDisplayList(mat_mia_Wings2),
+	gsSPDisplayList(mia_Left_Wing_DL_mesh_layer_4_tri_0),
+	gsSPDisplayList(mat_revert_mia_Wings2),
+	gsSPEndDisplayList(),
+};
+
 Gfx mia_Left_Wing_DL_mesh_layer_4_opt_2[] = {
 	gsSPDisplayList(mat_mia_Metal__METAL_),
 	gsSPDisplayList(mia_Left_Wing_DL_mesh_layer_4_tri_0),
@@ -6412,37 +6388,23 @@ Gfx mia_Left_Wing_DL_mesh_layer_4_opt_2[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_1[] = {
-	gsSPDisplayList(mat_mia_Mask1),
-	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_mia_Mask1),
-	gsSPEndDisplayList(),
-};
-
-Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_1_opt_2[] = {
-	gsSPDisplayList(mat_mia_Metal__METAL_),
-	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_mia_Metal__METAL_),
-	gsSPEndDisplayList(),
-};
-
-Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_6[] = {
+Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_5[] = {
 	gsSPDisplayList(mat_mia_Mask2),
-	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_6_tri_0),
+	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_5_tri_0),
 	gsSPDisplayList(mat_revert_mia_Mask2),
 	gsSPEndDisplayList(),
 };
 
-Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_6_opt_2[] = {
+Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_5_opt_2[] = {
 	gsSPDisplayList(mat_mia_Metal__METAL_),
-	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_6_tri_0),
+	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_5_tri_0),
 	gsSPDisplayList(mat_revert_mia_Metal__METAL_),
 	gsSPEndDisplayList(),
 };
 
-Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_6_with_layer_6_revert[] = {
+Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_5_with_revert[] = {
 	gsSPDisplayList(mat_mia_Mask2),
-	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_6_tri_0),
+	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_5_tri_0),
 	gsSPDisplayList(mat_revert_mia_Mask2),
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
@@ -6464,9 +6426,9 @@ Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_6_with_layer_6_revert[] = {
 	gsSPEndDisplayList(),
 };
 
-Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_6_opt_2_with_layer_6_revert[] = {
+Gfx mia_MaskSwitchOption_MaskDL_mesh_layer_5_opt_2_with_revert[] = {
 	gsSPDisplayList(mat_mia_Metal__METAL_),
-	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_6_tri_0),
+	gsSPDisplayList(mia_MaskSwitchOption_MaskDL_mesh_layer_5_tri_0),
 	gsSPDisplayList(mat_revert_mia_Metal__METAL_),
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_LIGHTING),
@@ -6492,6 +6454,13 @@ Gfx mia_Right_Wing_DL_mesh_layer_4[] = {
 	gsSPDisplayList(mat_mia_Wings),
 	gsSPDisplayList(mia_Right_Wing_DL_mesh_layer_4_tri_0),
 	gsSPDisplayList(mat_revert_mia_Wings),
+	gsSPEndDisplayList(),
+};
+
+Gfx mia_Right_Wing_DL_mesh_layer_4_opt_1[] = {
+	gsSPDisplayList(mat_mia_Wings2),
+	gsSPDisplayList(mia_Right_Wing_DL_mesh_layer_4_tri_0),
+	gsSPDisplayList(mat_revert_mia_Wings2),
 	gsSPEndDisplayList(),
 };
 
