@@ -390,7 +390,7 @@ local function special_expressions(m)
     elseif m.action == ACT_STEEP_JUMP then
         return {mouth = MIA_MOUTH_O}
 
-    elseif m.healCounter > 0 and (m.action & ACT_GROUP_CUTSCENE) == 0 then
+    elseif m.healCounter > 0 and (m.action & ACT_GROUP_CUTSCENE) == 0 and (m.action & ACT_FLAG_INVULNERABLE) == 0 then
         return { eyes = 9 }
         
     elseif (smluaanim == "Mia_StarDance") then
