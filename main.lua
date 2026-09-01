@@ -347,22 +347,6 @@ local function special_expressions(m)
     if m.action == ACT_IDLE and m.actionTimer >= 7 then
         return { eyes = MARIO_EYES_HALF_CLOSED }
 
-    elseif m.action == ACT_WALKING or m.action == ACT_BUTT_SLIDE or
-            m.action == ACT_DIVE_SLIDE or
-            m.action == ACT_STOMACH_SLIDE or
-            m.action == ACT_HOLD_BUTT_SLIDE or
-            m.action == ACT_SLIDE_KICK_SLIDE or
-            m.action == ACT_HOLD_STOMACH_SLIDE then
-        if (m.input & INPUT_NONZERO_ANALOG ~= 0) then
-            if (m.faceAngle.y < m.intendedYaw) then
-                return { eyes = MARIO_EYES_LOOK_RIGHT }
-            end
-
-            if (m.faceAngle.y > m.intendedYaw) then
-                return { eyes = MARIO_EYES_LOOK_LEFT }
-            end
-        end
-
     elseif curranim == CHAR_ANIM_TURNING_PART2 and animframe < 9 then
         return { eyes = MARIO_EYES_LOOK_RIGHT, mouth = MIA_MOUTH_O }
 
@@ -392,6 +376,22 @@ local function special_expressions(m)
 
     elseif m.healCounter > 0 and (m.action & ACT_GROUP_CUTSCENE) == 0 and (m.action & ACT_FLAG_INVULNERABLE) == 0 then
         return { eyes = 9 }
+        
+    elseif m.action == ACT_WALKING or m.action == ACT_BUTT_SLIDE or
+            m.action == ACT_DIVE_SLIDE or
+            m.action == ACT_STOMACH_SLIDE or
+            m.action == ACT_HOLD_BUTT_SLIDE or
+            m.action == ACT_SLIDE_KICK_SLIDE or
+            m.action == ACT_HOLD_STOMACH_SLIDE then
+        if (m.input & INPUT_NONZERO_ANALOG ~= 0) then
+            if (m.faceAngle.y < m.intendedYaw) then
+                return { eyes = MARIO_EYES_LOOK_RIGHT }
+            end
+
+            if (m.faceAngle.y > m.intendedYaw) then
+                return { eyes = MARIO_EYES_LOOK_LEFT }
+            end
+        end
         
     elseif (smluaanim == "Mia_StarDance") then
         if animframe < 27 then
@@ -512,13 +512,21 @@ end
 hook_event(HOOK_MARIO_UPDATE, function(m)
     if charSelect.character_get_current_number(m.playerIndex) == CT_MIA_MAILER then
         local special_expressions = special_expressions(m)
-
-        if m.action == ACT_WALKING and m.forwardVel > 33 then
-            smlua_anim_util_set_animation(m.marioObj, "Mia_RunFast")
-            m.marioBodyState.torsoAngle.x = -degrees_to_sm64(5)
-            m.marioBodyState.handState = MARIO_HAND_OPEN
+        if m.action == ACT_WALKING then
+            if m.forwardVel > 38 then
+                smlua_anim_util_set_animation(m.marioObj, "Mia_RunFast")
+                m.marioBodyState.torsoAngle.x = -degrees_to_sm64(5)
+                m.marioBodyState.handState = MARIO_HAND_OPEN
+                m.particleFlags = m.particleFlags | PARTICLE_DUST
+            end
+            if (m.controller.buttonDown & Y_BUTTON ) ~= 0 then
+                if (m.floor ~= nil and m.floor.type == SURFACE_SLOW) then
+                    m.forwardVel = m.forwardVel + 0.2 / (m.quicksandDepth + 1)
+                else
+                    m.forwardVel = m.forwardVel + 1.5 / (m.quicksandDepth + 1)
+                end
+            end
         end
-
         if special_expressions then
             if special_expressions.eyes then
                 m.marioBodyState.eyeState = special_expressions.eyes
