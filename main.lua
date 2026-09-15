@@ -519,13 +519,6 @@ hook_event(HOOK_MARIO_UPDATE, function(m)
                 m.marioBodyState.handState = MARIO_HAND_OPEN
                 m.particleFlags = m.particleFlags | PARTICLE_DUST
             end
-            if (m.controller.buttonDown & Y_BUTTON ) ~= 0 then
-                if (m.floor ~= nil and m.floor.type == SURFACE_SLOW) then
-                    m.forwardVel = m.forwardVel + 0.2 / (m.quicksandDepth + 1)
-                else
-                    m.forwardVel = m.forwardVel + 1.5 / (m.quicksandDepth + 1)
-                end
-            end
         end
         if special_expressions then
             if special_expressions.eyes then
@@ -554,3 +547,13 @@ hook_event(HOOK_MARIO_UPDATE, function(m)
         end
     end
 end)
+charSelect.character_hook_moveset(CT_MIA_MAILER, HOOK_MARIO_UPDATE, 
+    function (m)
+        if (m.controller.buttonDown & Y_BUTTON ) ~= 0 then
+                if (m.floor ~= nil and m.floor.type == SURFACE_SLOW) then
+                    m.forwardVel = m.forwardVel + 0.2 / (m.quicksandDepth + 1)
+                else
+                    m.forwardVel = m.forwardVel + 1.5 / (m.quicksandDepth + 1)
+                end
+            end
+        end)
